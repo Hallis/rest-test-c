@@ -11,6 +11,15 @@ gcc main.c -o main \
 -ljson-c -lcurl
 ```
 
+eller med make
+
+```console
+$ make
+gcc -g -Wall -I/D/Program/msys64/mingw64/include -I/D/Program/msys64/usr/include -c main.c  -o main.o
+gcc -g -Wall -I/D/Program/msys64/mingw64/include -I/D/Program/msys64/usr/include -o myFile main.o -L/D/Program/msys64/mingw64/lib -L/D/Program/msys64/usr/lib -ljson-c -lcurl
+Simple compiler named myFile has been compiled
+```
+
 För att lägga till fler paket, kör msys2 i Windows.
 En terminal öppnas, där pakethanteraren heter pacman
 Gå till https://packages.msys2.org/package/?repo=msys
