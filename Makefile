@@ -11,13 +11,29 @@ CC = gcc
 # define any compile-time flags
 CFLAGS = -g -Wall
 
+UNAME := $(shell uname -s)
+
+ifeq ($(OS),Windows_NT)
+	CFLAGS += -D WIN32
+	PATH_CURL = /D/Program/mingw64/usr
+	PATH_JSON_C = /D/Program/mingw64/usr
+else
+	ifeq ($(UNAME), Darwin)
+		CFLAGS += -D OSX
+		PATH_CURL = /usr/local/Cellar/curl/8.7.1
+		PATH_JSON_C = /usr/local
+	endif
+endif
+
+
+
 # define any directories containing header files other than /usr/include
-INCLUDES = -I/D/Program/msys64/mingw64/include -I/D/Program/msys64/usr/include
+INCLUDES = -I$(PATH_JSON_C)/include -I$(PATH_CURL)/include
 
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
 #   their path using -Lpath, something like:
-LFLAGS = -L/D/Program/msys64/mingw64/lib -L/D/Program/msys64/usr/lib
+LFLAGS = -L$(PATH_JSON_C)/lib -L$(PATH_CURL)/lib
 
 # define any libraries to link into executable:
 #   if I want to link in libraries (libx.so or libx.a) I use the -llibname 
@@ -38,7 +54,7 @@ SRCS = main.c
 OBJS = $(SRCS:.c=.o)
 
 # define the executable file 
-MAIN = REST-test
+MAIN = restest
 
 #
 # The following part of the makefile is generic; it can be used to 
