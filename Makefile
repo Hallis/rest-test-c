@@ -41,7 +41,7 @@ LFLAGS = -L$(PATH_JSON_C)/lib -L$(PATH_CURL)/lib
 LIBS = -ljson-c -lcurl
 
 # define the C source files
-SRCS = main.c
+SRCS = main.c curl-helper.c
 
 # define the C object files 
 #
