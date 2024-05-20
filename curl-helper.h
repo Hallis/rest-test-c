@@ -1,17 +1,18 @@
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct
 {
     char *ptr;
     size_t len;
-} CurlResonseStruct;
+} CurlResponseStruct;
 
 typedef struct
 {
     unsigned int userId;
     unsigned int id;
-    char *title;
+    char title[35+1];
     bool completed;
 } TodoStruct;
 
-int call_url(char *url, CurlResonseStruct *response);
+int call_url(char *url, CurlResponseStruct *response, TodoStruct *todoResponse);

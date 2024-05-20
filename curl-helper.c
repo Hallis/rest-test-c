@@ -17,7 +17,7 @@ response:
 */
 
 
-size_t writefunc(void *ptr, size_t size, size_t nmemb, CurlResonseStruct *s)
+size_t writefunc(void *ptr, size_t size, size_t nmemb, CurlResponseStruct *s)
 {
     size_t new_len = s->len + size * nmemb;
     s->ptr = realloc(s->ptr, new_len + 1);
@@ -33,7 +33,7 @@ size_t writefunc(void *ptr, size_t size, size_t nmemb, CurlResonseStruct *s)
     return size * nmemb;
 }
 
-int call_url(char *myUrl, CurlResonseStruct *jsonResponse)
+int call_url(char *myUrl, CurlResponseStruct *jsonResponse, TodoStruct *todoResponse)
 {
     CURL *curl_handle;
     CURLcode res;
@@ -83,5 +83,11 @@ int call_url(char *myUrl, CurlResonseStruct *jsonResponse)
 
     curl_global_cleanup();
 
+//  todoResponse->id = 10;
+//    todoResponse->userId = 20;
+//    strncpy(todoResponse->title, "Hell YEAH! AMERICA!!!", 21);
+//    todoResponse->completed = true;
+
+   
     return 0;
 }

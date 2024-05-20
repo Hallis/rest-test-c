@@ -18,17 +18,28 @@ response:
 */
 
 int main() {
-    CurlResonseStruct resp;
+    CurlResponseStruct resp;
     resp.ptr = malloc(1);
     resp.len = 0;
+    TodoStruct todoResponse = {
+        .userId = 0,
+        .id = 0,
+        .title = "",
+        .completed = false
+    };
 
     char *myUrl = "https://jsonplaceholder.typicode.com/todos/3";
 
-    int apa = call_url(myUrl, &resp);
+    int apa = call_url(myUrl, &resp, &todoResponse);
 
-    printf("----------------------------\n");
+    printf("============================\n");
     printf("%s\n", resp.ptr);
     printf("----------------------------\n");
+    printf("id     = %d\n", todoResponse.id);
+    printf("userid = %d\n", todoResponse.userId);
+    printf("title  = %s\n", todoResponse.title);
+    printf("complete = %s\n", todoResponse.completed ? "yes" : "no");
+    printf("============================\n");
 
     free(resp.ptr);
 
