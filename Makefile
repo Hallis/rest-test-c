@@ -9,23 +9,32 @@
 CC = gcc
 
 # define any compile-time flags
-CFLAGS = -g -Wall
+CFLAGS = -Wall -Werror -Wmissing-prototypes -Werror=unused-but-set-variable
+
+# define the executable file 
+PROG = resttest
 
 # define any directories containing header files other than /usr/include
-INCLUDES = -I/D/Program/msys64/mingw64/include -I/D/Program/msys64/usr/include
+# libcurl:   /D/Program/msys64/usr/include
+# libjson-c: /D/Program/msys64/ucrt64/include
+INCLUDES = -I/D/Program/msys64/usr/include
 
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
 #   their path using -Lpath, something like:
-LFLAGS = -L/D/Program/msys64/mingw64/lib -L/D/Program/msys64/usr/lib
+# libcurl:   /D/Program/msys64/usr/lib
+# libjson-c: /D/Program/msys64/ucrt64/lib
+LFLAGS = -L/D/Program/msys64/usr/lib
 
 # define any libraries to link into executable:
 #   if I want to link in libraries (libx.so or libx.a) I use the -llibname 
 #   option, something like (this will link in libmylib.so and libm.so:
-LIBS = -ljson-c -lcurl
+#LIBS = -lcurl -ljson
+LIBS = -ljson-c
 
 # define the C source files
-SRCS = main.c
+#SRCS = main.c
+SRCS = jsonarraytest.c
 
 # define the C object files 
 #
@@ -37,8 +46,6 @@ SRCS = main.c
 #
 OBJS = $(SRCS:.c=.o)
 
-# define the executable file 
-MAIN = REST-test
 
 #
 # The following part of the makefile is generic; it can be used to 
@@ -47,11 +54,13 @@ MAIN = REST-test
 #
 .PHONY: depend clean
 
-all:	$(MAIN)
-	@echo Simple compiler named $(MAIN) has been compiled
+all:	$(PROG)
+	@echo Simple compiler named $(PROG) has been compiled
 
-$(MAIN): $(OBJS) 
-	$(CC) $(CFLAGS) $(INCLUDES) -o $(MAIN) $(OBJS) $(LFLAGS) $(LIBS)
+#$(MAIN): $(OBJS) 
+#	$(CC) $(CFLAGS) $(INCLUDES) -o $(MAIN) $(OBJS) $(LFLAGS) $(LIBS)
+$(PROG): $(OBJS) 
+	$(CC) $(CFLAGS) $(OBJS) $(INCLUDES) -o $@ $(LFLAGS) $(LIBS)
 
 # this is a suffix replacement rule for building .o's from .c's
 # it uses automatic variables $<: the name of the prerequisite of
@@ -61,7 +70,7 @@ $(MAIN): $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $<  -o $@
 
 clean:
-	$(RM) *.o *~ *.exe $(MAIN)
+	$(RM) *.o *~ *.exe $(PROG)
 
 depend: $(SRCS)
 	makedepend $(INCLUDES) $^

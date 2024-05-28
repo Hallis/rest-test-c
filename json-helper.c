@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <json-c/json.h>
+#include "json-helper.h"
 
 void debugJson(char *json)
 {
